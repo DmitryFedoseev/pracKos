@@ -25,8 +25,7 @@ def find_object(video):
                     area = cv.contourArea(contour)
                     cv.circle(img, center, 2, (0, 0, 255), 2)
                     text = "(" + str(center[0]) + ", " + str(center[1]) + ")"
-                    cv.putText(img, text, (center[0] + 10, center[1] + 10), cv.FONT_HERSHEY_PLAIN, 1.5, (0, 0, 0),
-                                1, 8, 0)
+                    cv.putText(img, text, (center[0] + 10, center[1] + 10), cv.FONT_HERSHEY_PLAIN, 1.5, (0, 0, 0), 1, 8, 0)
 
         cv.imshow("mask", mask)
         cv.imshow("webcam", img)
