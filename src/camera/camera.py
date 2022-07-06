@@ -19,10 +19,7 @@ def find_object(video):
                     x, y, w, h = cv.boundingRect(contour)
                     cv.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 3)
                     rect = cv.minAreaRect(contour)
-                    box = cv.boxPoints(rect)
-                    box = np.int0(box)
                     center = (int(rect[0][0]), int(rect[0][1]))
-                    area = cv.contourArea(contour)
                     cv.circle(img, center, 2, (0, 0, 255), 2)
                     text = "(" + str(center[0]) + ", " + str(center[1]) + ")"
                     cv.putText(img, text, (center[0] + 10, center[1] + 10), cv.FONT_HERSHEY_PLAIN, 1.5, (0, 0, 0), 1, 8, 0)
