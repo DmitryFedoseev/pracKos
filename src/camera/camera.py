@@ -44,7 +44,7 @@ def run():
         upper_yellow = np.array([35, 255, 255])
 
         lower_green = np.array((10, 100, 100))
-        upper_green = np.array((10, 255, 255))
+        upper_green = np.array((70, 255, 255))
 
         lower_red = np.array((0, 150, 130))
         upper_red = np.array((10, 255, 255))
@@ -83,3 +83,4 @@ def run():
 
 if __name__ == '__main__':
     run()
+    
