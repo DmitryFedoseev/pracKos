@@ -28,10 +28,24 @@ def draw_coordinate(contour, img, center):
     cv.putText(img, text, (center[0] + 10, center[1] + 10), cv.FONT_HERSHEY_PLAIN, 1.5, (0, 0, 0), 1, 8, 0)
     return text
 
+# def find_homograhpy():
+#     point_old = np.array([ [,], [,], [,],[,] ])
+#     point_new = np.array([ [,],[,],[,],[,] ])
+#     h, status = cv.findHomography(point_old, point_new)
+#     return h
+
+# def find_new_coordinate(center):
+#     vect_center = np.array(center[0], center[1], 1)
+#     H = find_homograhpy()
+#     vect_new = np.dot(H, vect_center)
+#     return vect_new/vect_new[2]
+
+
 def find_color(contours, array, count, img):
     if len(contours) != 0:
         for contour in contours:
             area, center = find_coordinate(contour)
+            # new_center = find_new_coordinate(center)
             if area > 500:
                 draw_coordinate(contour, img, center)
                 array[count] = "(" + str(center[0]) + ", " + str(center[1]) + ")"
