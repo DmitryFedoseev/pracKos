@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <cstring>
 #include <iostream>
+#include <fcntl.h>
 using namespace std;
 
 
@@ -14,6 +15,9 @@ int main()
 {
     int sock;
     struct sockaddr_in addr;
+    char buf[512];
+    int bytes_read = 0;
+    string response;
 
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if(sock < 0)
@@ -23,33 +27,24 @@ int main()
     }
 
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(5001); 
+    addr.sin_port = htons(5000); 
     addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
-    char buf[1024];
+    
     if(connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
     {
         perror("connect");
         exit(2);
     }
-    while(true)
-    {
-        // cin.clear();
-        // cin.sync();
-        string response;
-        getline(cin, response);
-        if(response=="flag")
-        {
-            break;
+        while(true)
+        { 
+            bytes_read = read(sock, buf, sizeof(buf));
+            if(bytes_read <= 0)
+            {
+                break;
+            }
+            buf[bytes_read] = '\0';
         }
-        char *message;
-        message = new char[response.length()];
-        strcpy(message, response.c_str());
-        sendto(sock, message, sizeof(message), 0, (struct sockaddr *)&addr, sizeof(addr));
-        // send(sock, message, sizeof(message), 0);
-        // recv(sock, buf, sizeof(message), 0);
-        delete message;
-
-    }
+        cout << buf;
     close(sock);
 
     return 0;
