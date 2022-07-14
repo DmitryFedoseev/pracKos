@@ -43,8 +43,8 @@ int main()
                 break;
             }
             buf[bytes_read] = '\0';
+            cout << buf;
         }
-        cout << buf;
     close(sock);
 
     return 0;
