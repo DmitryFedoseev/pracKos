@@ -23,32 +23,32 @@ def find_coordinate(contour):
 def draw_coordinate(contour, img, center):
     x, y, w, h = cv.boundingRect(contour)
     cv.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 3)
-    cv.circle(img, center, 2, (0, 0, 255), 2)
+    # cv.circle(img, center, 2, (0, 0, 255), 2)
     text = "(" + str(center[0]) + ", " + str(center[1]) + ")"
     cv.putText(img, text, (center[0] + 10, center[1] + 10), cv.FONT_HERSHEY_PLAIN, 1.5, (0, 0, 0), 1, 8, 0)
     return text
 
-# def find_homograhpy():
-#     point_old = np.array([ [,], [,], [,],[,] ])
-#     point_new = np.array([ [,],[,],[,],[,] ])
-#     h, status = cv.findHomography(point_old, point_new)
-#     return h
+def find_homograhpy():
+    point_old = np.array([ [631,477], [4,475], [480,166],[162,163] ])
+    point_new = np.array([ [0,0],[111,0],[0,132],[150,132] ])
+    h, status = cv.findHomography(point_old, point_new)
+    return h
 
-# def find_new_coordinate(center):
-#     vect_center = np.array(center[0], center[1], 1)
-#     H = find_homograhpy()
-#     vect_new = np.dot(H, vect_center)
-#     return vect_new/vect_new[2]
+def find_new_coordinate(center):
+    vect_center = np.array([center[0], center[1], 1])
+    H = find_homograhpy()
+    vect_new = np.dot(H, vect_center)
+    return vect_new/vect_new[2]
 
 
 def find_color(contours, array, count, img):
     if len(contours) != 0:
         for contour in contours:
             area, center = find_coordinate(contour)
-            # new_center = find_new_coordinate(center)
+            new_center = find_new_coordinate(center)
             if area > 500:
-                draw_coordinate(contour, img, center)
-                array[count] = "(" + str(center[0]) + ", " + str(center[1]) + ")"
+                draw_coordinate(contour, img, (int(new_center[0]), int(new_center[1])))
+                array[count] = "(" + str(int(new_center[0])) + ", " + str(int(new_center[1])) + ")"
                 count += 1    
 
 def run():
@@ -58,7 +58,7 @@ def run():
         upper_yellow = np.array([35, 255, 255])
 
         lower_green = np.array((10, 100, 100))
-        upper_green = np.array((70, 255, 255))
+        upper_green = np.array((10, 255, 255))
 
         lower_red = np.array((0, 150, 130))
         upper_red = np.array((10, 255, 255))
